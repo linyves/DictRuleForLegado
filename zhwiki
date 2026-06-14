@@ -1,0 +1,7 @@
+{
+  "enabled": true,
+  "name": "维基百科byYves",
+  "showRule": "@json:$.extract_html",
+  "sortNumber": 0,
+  "urlRule": "https://zh.wikipedia.org/api/rest_v1/page/summary/{{key}}"
+}
