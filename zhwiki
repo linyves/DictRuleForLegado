@@ -1,7 +1,30 @@
-{
-  "enabled": true,
-  "name": "维基百科byYves",
-  "showRule": "@json:$.extract_html",
-  "sortNumber": 0,
-  "urlRule": "https://zh.wikipedia.org/api/rest_v1/page/summary/{{key}}"
-}
+[
+  {
+    "enabled": true,
+    "name": "维基百科(简体)byYves",
+    "showRule": "@json:$.extract_html",
+    "sortNumber": 0,
+    "urlRule": "https://zh.wikipedia.org/api/rest_v1/page/summary/{{key}},{'headers':{'Accept-Language':'zh-CN'}}"
+  },
+  {
+    "enabled": true,
+    "name": "维基百科(台湾繁体)byYves",
+    "showRule": "@json:$.extract_html",
+    "sortNumber": 0,
+    "urlRule": "https://zh.wikipedia.org/api/rest_v1/page/summary/{{key}},{'headers':{'Accept-Language':'zh-TW'}}"
+  },
+  {
+    "enabled": true,
+    "name": "维基百科(香港繁体)byYves",
+    "showRule": "@json:$.extract_html",
+    "sortNumber": 0,
+    "urlRule": "https://zh.wikipedia.org/api/rest_v1/page/summary/{{key}},{'headers':{'Accept-Language':'zh-HK'}}"
+  },
+  {
+    "enabled": true,
+    "name": "维基百科(澳门繁体)byYves",
+    "showRule": "@json:$.extract_html",
+    "sortNumber": 0,
+    "urlRule": "https://zh.wikipedia.org/api/rest_v1/page/summary/{{key}},{'headers':{'Accept-Language':'zh-MO'}}"
+  }
+]

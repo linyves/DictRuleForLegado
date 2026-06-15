@@ -1,6 +1,6 @@
 {
   "enabled": true,
-  "name": "汉典byYves20260614",
+  "name": "汉典 by Yves",
   "showRule": "@js:\nvar jsoup=org.jsoup.Jsoup.parse(result);\n\njsoup.select(\"script,.feedback-link,.google-auto-placed,.adsbygoogle,img,.xxjs-english,.citations-toggle-wrap\").remove();\n\njsoup.select(\".jbjs-item__eg-label\").forEach(function(el){\n    el.text(\"【例如】\");\n});\n\njsoup.select(\".xxjs-block-label--cit\").forEach(function(el){\n    el.text(\"【书证】\");\n});\n\njsoup.select(\".xxjs-block-label--syn\").forEach(function(el){\n    el.text(\"【近义词】\");\n});\n\njsoup.select(\".xxjs-block-label--ant\").forEach(function(el){\n    el.text(\"【反义词】\");\n});\n\njsoup.select(\".xxjs-citation__source,cite\").forEach(function(el){\n    el.text(\"——\"+el.text());\n});\n\nvar j=jsoup.select(\"#jbjs\");\nvar x=jsoup.select(\"#xxjs\");\nvar g=jsoup.select(\"#gyjs\");\nvar k=jsoup.select(\"#kxzd\");\nvar s=jsoup.select(\"#swjz\");\nvar r=\"\";\nif(j.size()>0)r+=j.html();\nif(x.size()>0)r+=x.html();\nif(g.size()>0)r+=g.html();\nif(k.size()>0)r+=k.html();\nif(s.size()>0)r+=s.html();\nr",
   "sortNumber": 0,
   "urlRule": "https://www.zdic.net/hans/{{key}}"
