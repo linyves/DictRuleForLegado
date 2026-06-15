@@ -1,7 +1,7 @@
 {
   "enabled": true,
   "name": "萌娘百科byYves",
-  "showRule": "@js:var e=JSON.parse(result).query.pages[0].extract;var parts=e.split(/<h2[^>]*>/);var intro=parts[0];var firstSection=parts.length>1?'<h2>'+parts[1].replace(/<span[^>]*>[^<]*<\\/span>/,'').split('<h2')[0]:'';intro+firstSection",
+  "showRule": "@js:var page=JSON.parse(result).query.pages[0];if(!page.extract){''}else{var e=page.extract;var parts=e.split(/<h2[^>]*>/);var intro=parts[0];var firstSection=parts.length>1?'<h2>'+parts[1].replace(/<span[^>]*>[^<]*<\\/span>/,'').split('<h2')[0]:'';intro+firstSection;}",
   "sortNumber": 0,
   "urlRule": "https://mzh.moegirl.org.cn/api.php?action=query&titles={{key}}&prop=extracts&format=json&formatversion=2"
 }
