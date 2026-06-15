@@ -1,0 +1,7 @@
+{
+  "enabled": true,
+  "name": "能不能好好说话byYves",
+  "showRule": "@js:JSON.parse(result).map(i=>'<h2>'+i.name+'</h2>'+(i.trans?i.trans.join(' / '):'尚未收录')).join('<br><br>')",
+  "sortNumber": 0,
+  "urlRule": "https://lab.magiconch.com/api/nbnhhsh/guess,{\"method\":\"POST\",\"headers\":{\"content-type\":\"application/json\"},\"body\":\"{\\\"text\\\":\\\"{{key}}\\\"}\"}  "
+}
