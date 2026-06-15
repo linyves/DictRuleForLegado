@@ -8,6 +8,11 @@ https://cdn.jsdelivr.net/gh/linyves/DictRuleForLegado@refs/heads/main/zdic
 <br>
 
 ## 百科网站  
+### 百度百科  
+*限速严重，短时间查询次数多会失败*
+```
+https://cdn.jsdelivr.net/gh/linyves/DictRuleForLegado@refs/heads/main/baidubaike
+```  
 ### 中文维基百科  
 *导入可选陆台港澳4种中文变体*
 ```
