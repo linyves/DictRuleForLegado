@@ -1,0 +1,69 @@
+{
+  "baidubaike.json": {
+    "enabled": true,
+    "name": "百度百科 by Yves（无结果可能是限速）",
+    "showRule": "@json:$.abstract",
+    "sortNumber": 0,
+    "urlRule": "https://baike.baidu.com/api/openapi/BaikeLemmaCardApi?scope=103&format=json&appid=379020&bk_key={{key}}&bk_length=600"
+  },
+  "moegirl.json": {
+    "enabled": true,
+    "name": "萌娘百科 by Yves",
+    "showRule": "@js:var page=JSON.parse(result).query.pages[0];if(!page.extract){''}else{var e=page.extract;var parts=e.split(/<h2[^>]*>/);var intro=parts[0];var firstSection=parts.length>1?'<h2>'+parts[1].replace(/<span[^>]*>[^<]*<\\/span>/,'').split('<h2')[0]:'';intro+firstSection;}",
+    "sortNumber": 0,
+    "urlRule": "https://mzh.moegirl.org.cn/api.php?action=query&titles={{key}}&prop=extracts&format=json&formatversion=2"
+  },
+  "nbnhhsh.json": [
+    {
+      "enabled": true,
+      "name": "能不能好好说话 by Yves",
+      "showRule": "@js:JSON.parse(result).map(i=>'<h2>'+i.name+'</h2>'+(i.trans?i.trans.join(' / '):'尚未收录')).join('<br><br>')",
+      "sortNumber": 0,
+      "urlRule": "https://lab.magiconch.com/api/nbnhhsh/guess,{\"method\":\"POST\",\"headers\":{\"content-type\":\"application/json\"},\"body\":\"{\\\"text\\\":\\\"{{key}}\\\"}\"}  "
+    },
+    {
+      "enabled": true,
+      "name": "能不能好好说话 排序版 by Yves",
+      "showRule": "@js:JSON.parse(result).map(i=>'<h2>'+i.name+'</h2>'+(i.trans?i.trans.slice().sort((a,b)=>a.length-b.length).join(' / '):'尚未收录')).join('<br><br>')",
+      "sortNumber": 0,
+      "urlRule": "https://lab.magiconch.com/api/nbnhhsh/guess,{\"method\":\"POST\",\"headers\":{\"content-type\":\"application/json\"},\"body\":\"{\\\"text\\\":\\\"{{key}}\\\"}\"}  "
+    }
+  ],
+  "zdic.json": {
+    "enabled": true,
+    "name": "汉典 by Yves",
+    "showRule": "@js:\nvar jsoup=org.jsoup.Jsoup.parse(result);\n\njsoup.select(\"script,.feedback-link,.google-auto-placed,.adsbygoogle,img,.xxjs-english,.citations-toggle-wrap\").remove();\n\njsoup.select(\".jbjs-item__eg-label\").forEach(function(el){\n    el.text(\"【例如】\");\n});\n\njsoup.select(\".xxjs-block-label--cit\").forEach(function(el){\n    el.text(\"【书证】\");\n});\n\njsoup.select(\".xxjs-block-label--syn\").forEach(function(el){\n    el.text(\"【近义词】\");\n});\n\njsoup.select(\".xxjs-block-label--ant\").forEach(function(el){\n    el.text(\"【反义词】\");\n});\n\njsoup.select(\".xxjs-citation__source,cite\").forEach(function(el){\n    el.text(\"——\"+el.text());\n});\n\nvar j=jsoup.select(\"#jbjs\");\nvar x=jsoup.select(\"#xxjs\");\nvar g=jsoup.select(\"#gyjs\");\nvar k=jsoup.select(\"#kxzd\");\nvar s=jsoup.select(\"#swjz\");\nvar r=\"\";\nif(j.size()>0)r+=j.html();\nif(x.size()>0)r+=x.html();\nif(g.size()>0)r+=g.html();\nif(k.size()>0)r+=k.html();\nif(s.size()>0)r+=s.html();\nr",
+    "sortNumber": 0,
+    "urlRule": "https://www.zdic.net/hans/{{key}}"
+  },
+  "zhwiki.json": [
+    {
+      "enabled": true,
+      "name": "维基百科(简体)byYves",
+      "showRule": "@json:$.extract_html",
+      "sortNumber": 0,
+      "urlRule": "https://zh.wikipedia.org/api/rest_v1/page/summary/{{key}},{'headers':{'Accept-Language':'zh-CN'}}"
+    },
+    {
+      "enabled": true,
+      "name": "维基百科(台湾繁体)byYves",
+      "showRule": "@json:$.extract_html",
+      "sortNumber": 0,
+      "urlRule": "https://zh.wikipedia.org/api/rest_v1/page/summary/{{key}},{'headers':{'Accept-Language':'zh-TW'}}"
+    },
+    {
+      "enabled": true,
+      "name": "维基百科(香港繁体)byYves",
+      "showRule": "@json:$.extract_html",
+      "sortNumber": 0,
+      "urlRule": "https://zh.wikipedia.org/api/rest_v1/page/summary/{{key}},{'headers':{'Accept-Language':'zh-HK'}}"
+    },
+    {
+      "enabled": true,
+      "name": "维基百科(澳门繁体)byYves",
+      "showRule": "@json:$.extract_html",
+      "sortNumber": 0,
+      "urlRule": "https://zh.wikipedia.org/api/rest_v1/page/summary/{{key}},{'headers':{'Accept-Language':'zh-MO'}}"
+    }
+  ]
+}
