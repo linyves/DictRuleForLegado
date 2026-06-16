@@ -27,37 +27,36 @@ jobs:
 
           OUTPUT_FILE = 'dictrule.json'
 
-          # 递归查找所有 .json 文件，排除 .github 目录
           json_files = glob.glob('**/*.json', recursive=True)
           json_files = [f for f in json_files if not f.startswith('.github/')]
 
-          # 若无 JSON 文件，提前退出避免生成空文件
           if not json_files:
               print("No JSON files found, skipping.")
               sys.exit(0)
 
-          # 合并策略：使用文件路径作为顶层键，保证唯一性
-          merged_data = {}
+          merged_data = []
           failed_files = []
 
           for json_file in sorted(json_files):
               try:
                   with open(json_file, 'r', encoding='utf-8') as f:
-                      merged_data[json_file] = json.load(f)
+                      data = json.load(f)
+                      if isinstance(data, list):
+                          merged_data.extend(data)
+                      else:
+                          merged_data.append(data)
               except Exception as e:
                   print(f"::warning::Error reading {json_file}: {e}")
                   failed_files.append(json_file)
 
-          # 任何解析失败都中止，避免输出不完整的合并文件
           if failed_files:
               print(f"::error::Failed to parse {len(failed_files)} file(s), aborting.")
               sys.exit(1)
 
-          # 写入合并结果
           with open(OUTPUT_FILE, 'w', encoding='utf-8') as f:
               json.dump(merged_data, f, ensure_ascii=False, indent=2)
 
-          print(f"Merged {len(merged_data)} files into {OUTPUT_FILE}")
+          print(f"Merged {len(json_files)} files into {OUTPUT_FILE}")
         shell: python
 
       - name: Configure Git
