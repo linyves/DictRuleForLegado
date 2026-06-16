@@ -28,7 +28,7 @@ jobs:
           OUTPUT_FILE = 'dictrule.json'
 
           json_files = glob.glob('**/*.json', recursive=True)
-          json_files = [f for f in json_files if not f.startswith('.github/')]
+          json_files = [f for f in json_files if not f.startswith('.github/') and f != OUTPUT_FILE]
 
           if not json_files:
               print("No JSON files found, skipping.")
@@ -67,6 +67,8 @@ jobs:
       - name: Commit and push
         run: |
           set -e
-          git pull --rebase origin main
           git add dictrule.json
-          git diff --staged --quiet || (git commit -m "chore: merge JSON files [skip ci]" && git push)
+          git diff --cached --quiet && exit 0
+          git pull --rebase origin main
+          git commit -m "chore: merge JSON files [skip ci]"
+          git push
