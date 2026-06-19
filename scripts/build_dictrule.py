@@ -18,11 +18,7 @@ def is_rule_list(data: object) -> bool:
 
 
 def is_legado_rule_file(path: Path) -> bool:
-    """Accept both single-rule objects and multiple-rule arrays.
-
-    Files like zhwiki.json use a top-level array, so the script must keep
-    that exact structure instead of trying to coerce it.
-    """
+    """Accept both single-rule objects and multiple-rule arrays."""
     if path.name == OUTPUT_FILE.name:
         return False
     if path.suffix != ".json":
@@ -38,21 +34,27 @@ def is_legado_rule_file(path: Path) -> bool:
 
 
 def main() -> None:
-    merged: dict[str, object] = {}
+    merged: list[object] = []
     for path in sorted(REPO_ROOT.rglob("*.json")):
         if not is_legado_rule_file(path):
             continue
 
-        rel_path = path.relative_to(REPO_ROOT).as_posix()
         with path.open("r", encoding="utf-8") as f:
-            merged[rel_path] = json.load(f)
+            data = json.load(f)
+
+        if is_rule_object(data):
+            merged.append(data)
+        elif is_rule_list(data):
+            merged.extend(data)
 
     OUTPUT_FILE.write_text(
         json.dumps(merged, ensure_ascii=False, indent=2, sort_keys=True) + "\n",
         encoding="utf-8",
     )
 
-    print(f"Generated {OUTPUT_FILE.relative_to(REPO_ROOT)} with {len(merged)} entries.")
+    print(
+        f"Generated {OUTPUT_FILE.relative_to(REPO_ROOT)} with {len(merged)} rule(s)."
+    )
 
 
 if __name__ == "__main__":
