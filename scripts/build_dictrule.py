@@ -6,9 +6,23 @@ from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 OUTPUT_FILE = REPO_ROOT / "dictrule.json"
+REQUIRED_KEYS = ("enabled", "name", "showRule", "sortNumber", "urlRule")
+
+
+def is_rule_object(data: object) -> bool:
+    return isinstance(data, dict) and all(key in data for key in REQUIRED_KEYS)
+
+
+def is_rule_list(data: object) -> bool:
+    return isinstance(data, list) and all(is_rule_object(item) for item in data)
 
 
 def is_legado_rule_file(path: Path) -> bool:
+    """Accept both single-rule objects and multiple-rule arrays.
+
+    Files like zhwiki.json use a top-level array, so the script must keep
+    that exact structure instead of trying to coerce it.
+    """
     if path.name == OUTPUT_FILE.name:
         return False
     if path.suffix != ".json":
@@ -20,11 +34,7 @@ def is_legado_rule_file(path: Path) -> bool:
     except (OSError, json.JSONDecodeError):
         return False
 
-    if isinstance(data, dict):
-        return any(key in data for key in ("urlRule", "showRule", "enabled", "name"))
-    if isinstance(data, list):
-        return all(isinstance(item, dict) and all(key in item for key in ("urlRule", "showRule", "enabled", "name")) for item in data)
-    return False
+    return is_rule_object(data) or is_rule_list(data)
 
 
 def main() -> None:
@@ -32,6 +42,7 @@ def main() -> None:
     for path in sorted(REPO_ROOT.rglob("*.json")):
         if not is_legado_rule_file(path):
             continue
+
         rel_path = path.relative_to(REPO_ROOT).as_posix()
         with path.open("r", encoding="utf-8") as f:
             merged[rel_path] = json.load(f)
